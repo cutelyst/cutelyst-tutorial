@@ -1,5 +1,8 @@
 #include "books.h"
 
+#include <QtSql>
+#include <Cutelyst/Plugins/Utils/Sql>
+
 using namespace Cutelyst;
 
 Books::Books(QObject *parent) : Controller(parent)
@@ -24,7 +27,10 @@ void Books::list(Context *c)
     // stash where they can be accessed by the Grantlee template
     // c->setStash("books", sql result);
     // But, for now, use this code until we create the model later
-    c->setStash("books", "");
+    QSqlQuery query = CPreparedSqlQueryThreadForDB("SELECT * FROM book", "MyDB");
+    if (query.exec()) {
+        c->setStash("books", Sql::queryToHashList(query));
+    }
 
     // Set the Grantlee template to use. You will almost always want to do this
     // in your action methods (action methods respond to user input in

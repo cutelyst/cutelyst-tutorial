@@ -13,7 +13,9 @@ target_link_libraries(MyApp
     Cutelyst::Core
     Cutelyst::StaticSimple
     Cutelyst::View::Grantlee
+    Cutelyst::Utils::Sql
     Qt5::Core
     Qt5::Network
+    Qt5::Sql
 )
 

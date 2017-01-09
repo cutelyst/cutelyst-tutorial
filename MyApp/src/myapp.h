@@ -14,6 +14,8 @@ public:
     ~MyApp();
 
     bool init();
+
+    virtual bool postFork() override;
 };
 
 #endif //MYAPP_H

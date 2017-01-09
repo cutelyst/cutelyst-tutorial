@@ -2,6 +2,10 @@
 
 #include <Cutelyst/Plugins/StaticSimple/staticsimple.h>
 #include <Cutelyst/Plugins/View/Grantlee/grantleeview.h>
+#include <Cutelyst/Plugins/Utils/Sql>
+
+#include <QtSql>
+#include <QDebug>
 
 #include "root.h"
 #include "books.h"
@@ -27,6 +31,18 @@ bool MyApp::init()
     auto view = new GrantleeView(this);
     view->setIncludePaths({ pathTo({ "root", "src" }) });
 
+    return true;
+}
+
+bool MyApp::postFork()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", Sql::databaseNameThread("MyDB"));
+    db.setDatabaseName("myapp.db");
+    db.setConnectOptions("foreign_keys = ON");
+    if (!db.open()) {
+        qCritical() << "Failed to open database:" << db.lastError().text();
+        return false;
+    }
     return true;
 }
 
