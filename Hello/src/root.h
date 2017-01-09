@@ -19,6 +19,11 @@ public:
     C_ATTR(defaultPage, :Path)
     void defaultPage(Context *c);
 
+    C_ATTR(hello, :Global :AutoArgs)
+    void hello(Context *c) {
+        c->response()->body() = "Hello, World!";
+    }
+
 private:
     C_ATTR(End, :ActionClass("RenderView"))
     void End(Context *c) { Q_UNUSED(c); }
