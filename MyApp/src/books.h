@@ -20,6 +20,12 @@ public:
      */
     C_ATTR(list, :Local)
     void list(Context *c);
+
+    /**
+     * Create a book with the supplied title, rating, and author
+     */
+    C_ATTR(url_create, :Local :Args(3))
+    void url_create(Context *c, const QString &title, const QString &rating, const QString &authorId);
 };
 
 #endif //BOOKS_H

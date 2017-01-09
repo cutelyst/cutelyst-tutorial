@@ -38,3 +38,46 @@ void Books::list(Context *c)
     c->setStash("template", "books/list.html");
 }
 
+void Books::url_create(Context *c, const QString &title, const QString &rating, const QString &authorId)
+{
+    // In addition to context, get the title, rating, &
+    // author_id args from the URL. Note that Cutelyst automatically
+    // puts extra information after the "/<controller_name>/<action_name/"
+    // as QStrings.  The args are separated  by the '/' char on the URL.
+
+    // Insert the book into it's table
+    QSqlQuery query = CPreparedSqlQueryThreadForDB("INSERT INTO book (title, rating) VALUES (:title, :rating)", "MyDB");
+    query.bindValue(":title", title);
+    query.bindValue(":rating", rating);
+    int bookId = 0;
+    bool error = true;
+    if (query.exec()) {
+        bookId = query.lastInsertId().toInt();
+
+        query = CPreparedSqlQueryThreadForDB("INSERT INTO book_author (book_id, author_id) VALUES (:book_id, :author_id)", "MyDB");
+        query.bindValue(":book_id", bookId);
+        query.bindValue(":author_id", authorId);
+        if (query.exec()) {
+            error = false;
+        }
+    }
+
+    // On error show the last one
+    if (error) {
+        c->stash()["error_msg"] = query.lastError().text();
+    }
+
+    QVariantHash book;
+    book["title"] = title;
+    book["rating"] = rating;
+
+    // Assign the Book object to the stash for display and set template
+    c->stash({
+                 {"book", book},
+                 {"template", "books/create_done.html"}
+             });
+
+    // Disable caching for this page
+    c->response()->setHeader("Cache-Control", "no-cache");
+}
+
