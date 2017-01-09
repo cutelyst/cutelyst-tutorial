@@ -1,6 +1,7 @@
 #include "hello.h"
 
 #include <Cutelyst/Plugins/StaticSimple/staticsimple.h>
+#include <Cutelyst/Plugins/View/Grantlee/grantleeview.h>
 
 #include "root.h"
 
@@ -19,6 +20,8 @@ bool Hello::init()
     new Root(this);
 
     new StaticSimple(this);
+
+    new GrantleeView(this);
 
     return true;
 }

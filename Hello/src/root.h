@@ -21,7 +21,7 @@ public:
 
     C_ATTR(hello, :Global :AutoArgs)
     void hello(Context *c) {
-        c->response()->body() = "Hello, World!";
+        c->setStash("template", "hello.html");
     }
 
 private:

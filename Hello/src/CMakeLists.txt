@@ -12,6 +12,7 @@ add_library(Hello SHARED ${Hello_SRCS})
 target_link_libraries(Hello
     Cutelyst::Core
     Cutelyst::StaticSimple
+    Cutelyst::View::Grantlee
     Qt5::Core
     Qt5::Network
 )
