@@ -30,6 +30,7 @@ bool MyApp::init()
 
     auto view = new GrantleeView(this);
     view->setIncludePaths({ pathTo({ "root", "src" }) });
+    view->setWrapper("wrapper.html");
 
     return true;
 }

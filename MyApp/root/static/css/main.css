@@ -1,0 +1,36 @@
+#header {
+    text-align: center;
+}
+#header h1 {
+    margin: 0;
+}
+#header img {
+    float: right;
+}
+#footer {
+    text-align: center;
+    font-style: italic;
+    padding-top: 20px;
+}
+#menu {
+    font-weight: bold;
+    background-color: #ddd;
+}
+#menu ul {
+    list-style: none;
+    float: left;
+    margin: 0;
+    padding: 0 0 50% 5px;
+    font-weight: normal;
+    background-color: #ddd;
+    width: 100px;
+}
+#content {
+    margin-left: 120px;
+}
+.message {
+    color: #390;
+}
+.error {
+    color: #f00;
+}
