@@ -12,6 +12,7 @@ add_library(MyApp SHARED ${MyApp_SRCS})
 target_link_libraries(MyApp
     Cutelyst::Core
     Cutelyst::StaticSimple
+    Cutelyst::View::Grantlee
     Qt5::Core
     Qt5::Network
 )

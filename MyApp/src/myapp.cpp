@@ -1,6 +1,7 @@
 #include "myapp.h"
 
 #include <Cutelyst/Plugins/StaticSimple/staticsimple.h>
+#include <Cutelyst/Plugins/View/Grantlee/grantleeview.h>
 
 #include "root.h"
 #include "books.h"
@@ -22,6 +23,9 @@ bool MyApp::init()
     new Books(this);
 
     new StaticSimple(this);
+
+    auto view = new GrantleeView(this);
+    view->setIncludePaths({ pathTo({ "root", "src" }) });
 
     return true;
 }

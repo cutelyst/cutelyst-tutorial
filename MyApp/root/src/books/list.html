@@ -1,0 +1,14 @@
+{% comment %}This is a Grantlee comment.{% endcomment %}
+
+{% comment %}Some basic HTML with a loop to display books{% endcomment %}
+<table>
+<tr><th>Title</th><th>Rating</th><th>Author(s)</th></tr>
+{% comment %}Display each book in a table row{% endcomment %}
+{% for book in books %}
+  <tr>
+    <td>{{ book.title }}</td>
+    <td>{{ book.rating }}</td>
+    <td></td>
+  </tr>
+{% endfor %}
+</table>
