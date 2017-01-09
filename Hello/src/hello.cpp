@@ -4,6 +4,7 @@
 #include <Cutelyst/Plugins/View/Grantlee/grantleeview.h>
 
 #include "root.h"
+#include "site.h"
 
 using namespace Cutelyst;
 
@@ -18,6 +19,7 @@ Hello::~Hello()
 bool Hello::init()
 {
     new Root(this);
+    new Site(this);
 
     new StaticSimple(this);
 
