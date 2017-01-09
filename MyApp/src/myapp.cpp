@@ -3,6 +3,7 @@
 #include <Cutelyst/Plugins/StaticSimple/staticsimple.h>
 
 #include "root.h"
+#include "books.h"
 
 using namespace Cutelyst;
 
@@ -17,6 +18,8 @@ MyApp::~MyApp()
 bool MyApp::init()
 {
     new Root(this);
+
+    new Books(this);
 
     new StaticSimple(this);
 
