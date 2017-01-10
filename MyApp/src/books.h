@@ -44,6 +44,20 @@ public:
      */
     C_ATTR(form_create_do, :Chained("base") :PathPart("form_create_do") :Args(0))
     void form_create_do(Context *c);
+
+    /**
+     * Fetch the specified book object based on the book ID and store
+     * it in the stash
+     */
+    C_ATTR(object, :Chained("base") :PathPart("id") :CaptureArgs(1))
+    void object(Context *c, const QString &id);
+
+    /**
+     * Fetch the specified book object based on the book ID and store
+     * it in the stash
+     */
+    C_ATTR(delete_obj, :Chained("object") :PathPart("delete") :Args(0))
+    void delete_obj(Context *c);
 };
 
 #endif //BOOKS_H

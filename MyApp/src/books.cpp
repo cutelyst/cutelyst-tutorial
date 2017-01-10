@@ -129,3 +129,33 @@ void Books::form_create_do(Context *c)
              });
 }
 
+void Books::object(Context *c, const QString &id)
+{
+    // Find the object on the database
+    QSqlQuery query = CPreparedSqlQueryThreadForDB("SELECT * FROM book WHERE id = :id", "MyDB");
+    query.bindValue(":id", id);
+    if (query.exec()) {
+        c->setStash("object", Sql::queryToHashObject(query));
+    } else {
+        // You would probably want to do something like this in a real app:
+        // c->detach("/error_404");
+    }
+    qDebug() << "*** INSIDE OBJECT METHOD for obj id=" << id << " ***";
+}
+
+void Books::delete_obj(Context *c)
+{
+    QVariantHash book = c->stash("object").toHash();
+
+    // Delete the object on the database
+    QSqlQuery query = CPreparedSqlQueryThreadForDB("DELETE FROM book WHERE id = :id", "MyDB");
+    query.bindValue(":id", book.value("id"));
+    if (query.exec()) {
+        // Set a status message to be displayed at the top of the view
+        c->setStash("status_msg", "Book deleted.");
+    }
+
+    // Forward to the list action/method in this controller
+    c->forward("list");
+}
+
