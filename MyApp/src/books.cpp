@@ -155,7 +155,8 @@ void Books::delete_obj(Context *c)
         c->setStash("status_msg", "Book deleted.");
     }
 
-    // Forward to the list action/method in this controller
-    c->forward("list");
+    // Redirect the user back to the list page. Note the use
+    // of actionFor as earlier in this section (BasicCRUD)
+    c->response()->redirect(c->uriFor(CActionFor("list")));
 }
 
