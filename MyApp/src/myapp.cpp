@@ -12,6 +12,8 @@
 
 #include "root.h"
 #include "books.h"
+#include "login.h"
+#include "logout.h"
 
 #include "authstoresql.h"
 
@@ -32,6 +34,10 @@ bool MyApp::init()
     new Books(this);
 
     new StaticSimple(this);
+
+    new Login(this);
+
+    new Logout(this);
 
     auto view = new GrantleeView(this);
     view->setIncludePaths({ pathTo({ "root", "src" }) });
