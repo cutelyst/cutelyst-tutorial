@@ -20,6 +20,12 @@ public:
     void defaultPage(Context *c);
 
 private:
+    /**
+     * Check if there is a user and, if not, forward to login page
+     */
+    C_ATTR(Auto, :Private)
+    bool Auto(Context *c);
+
     C_ATTR(End, :ActionClass("RenderView"))
     void End(Context *c) { Q_UNUSED(c); }
 };
