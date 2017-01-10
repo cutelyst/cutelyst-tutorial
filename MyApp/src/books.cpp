@@ -146,17 +146,23 @@ void Books::object(Context *c, const QString &id)
 void Books::delete_obj(Context *c)
 {
     QVariantHash book = c->stash("object").toHash();
+    QString statusMsg;
 
     // Delete the object on the database
     QSqlQuery query = CPreparedSqlQueryThreadForDB("DELETE FROM book WHERE id = :id", "MyDB");
     query.bindValue(":id", book.value("id"));
     if (query.exec()) {
         // Set a status message to be displayed at the top of the view
-        c->setStash("status_msg", "Book deleted.");
+        statusMsg = "Book deleted.";
+    } else {
+        // Set an error message to be displayed at the top of the view
+        statusMsg = query.lastError().text();
     }
 
     // Redirect the user back to the list page. Note the use
     // of actionFor as earlier in this section (BasicCRUD)
-    c->response()->redirect(c->uriFor(CActionFor("list")));
+    c->response()->redirect(c->uriFor(CActionFor("list"), ParamsMultiMap{
+                                {"status_msg", statusMsg }
+                            }));
 }
 

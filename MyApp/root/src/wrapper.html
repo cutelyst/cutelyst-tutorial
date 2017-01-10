@@ -25,7 +25,7 @@
 
 <div id="content">
     {% comment %} Status and error messages {% endcomment %}
-        <span class="message">{{ status_msg }}</span>
+        <span class="message">{{ status_msg }}{{ c.request.params.status_msg|escape }}</span>
         <span class="error">{{ error_msg }}</span>
     {% comment %} This is where Grantlee will stick all of your template's contents.{% endcomment %}
     {{ content }}
