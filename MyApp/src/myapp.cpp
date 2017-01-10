@@ -3,12 +3,17 @@
 #include <Cutelyst/Plugins/StaticSimple/staticsimple.h>
 #include <Cutelyst/Plugins/View/Grantlee/grantleeview.h>
 #include <Cutelyst/Plugins/Utils/Sql>
+#include <Cutelyst/Plugins/Session/Session>
+#include <Cutelyst/Plugins/Authentication/authentication.h>
+#include <Cutelyst/Plugins/Authentication/credentialpassword.h>
 
 #include <QtSql>
 #include <QDebug>
 
 #include "root.h"
 #include "books.h"
+
+#include "authstoresql.h"
 
 using namespace Cutelyst;
 
@@ -31,6 +36,14 @@ bool MyApp::init()
     auto view = new GrantleeView(this);
     view->setIncludePaths({ pathTo({ "root", "src" }) });
     view->setWrapper("wrapper.html");
+
+    new Session(this);
+
+    auto auth = new Authentication(this);
+    auto credential = new CredentialPassword;
+    credential->setPasswordType(CredentialPassword::Clear);
+
+    auth->addRealm(new AuthStoreSql, credential);
 
     return true;
 }
