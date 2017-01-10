@@ -22,9 +22,15 @@ public:
     void list(Context *c);
 
     /**
+     * Can place common logic to start chained dispatch here
+     */
+    C_ATTR(base, :Chained("/") :PathPart("books") :CaptureArgs(0))
+    void base(Context *c);
+
+    /**
      * Create a book with the supplied title, rating, and author
      */
-    C_ATTR(url_create, :Chained("/") :PathPart("books/url_create") :Args(3))
+    C_ATTR(url_create, :Chained("base") :PathPart("url_create") :Args(3))
     void url_create(Context *c, const QString &title, const QString &rating, const QString &authorId);
 };
 

@@ -38,6 +38,12 @@ void Books::list(Context *c)
     c->setStash("template", "books/list.html");
 }
 
+void Books::base(Context *c)
+{
+    // Print a message to the debug log
+    qDebug("*** INSIDE BASE METHOD ***");
+}
+
 void Books::url_create(Context *c, const QString &title, const QString &rating, const QString &authorId)
 {
     // In addition to context, get the title, rating, &
