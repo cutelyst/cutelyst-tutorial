@@ -87,3 +87,45 @@ void Books::url_create(Context *c, const QString &title, const QString &rating, 
     c->response()->setHeader("Cache-Control", "no-cache");
 }
 
+void Books::form_create(Context *c)
+{
+    // Set the Grantlee Template to use
+    c->setStash("template", "books/form_create.html");
+}
+
+void Books::form_create_do(Context *c)
+{
+    // Retrieve the values from the form
+    QString title = c->request()->param("title", "N/A");
+    QString rating = c->request()->param("rating", "N/A");
+    QString authorId = c->request()->param("author_id", "1");
+
+    // Insert the book into it's table
+    QSqlQuery query = CPreparedSqlQueryThreadForDB("INSERT INTO book (title, rating) VALUES (:title, :rating)", "MyDB");
+    query.bindValue(":title", title);
+    query.bindValue(":rating", rating);
+    int bookId = 0;
+    bool error = true;
+    if (query.exec()) {
+        bookId = query.lastInsertId().toInt();
+
+        query = CPreparedSqlQueryThreadForDB("INSERT INTO book_author (book_id, author_id) VALUES (:book_id, :author_id)", "MyDB");
+        query.bindValue(":book_id", bookId);
+        query.bindValue(":author_id", authorId);
+        if (query.exec()) {
+            error = false;
+        }
+    }
+
+    // On error show the last one
+    if (error) {
+        c->stash()["error_msg"] = query.lastError().text();
+    }
+
+    // Assign the Book object to the stash for display and set template
+    c->stash({
+                 {"book", QVariant::fromValue(c->request()->params())},
+                 {"template", "books/create_done.html"}
+             });
+}
+

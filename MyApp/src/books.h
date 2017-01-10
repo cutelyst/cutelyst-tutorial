@@ -32,6 +32,18 @@ public:
      */
     C_ATTR(url_create, :Chained("base") :PathPart("url_create") :Args(3))
     void url_create(Context *c, const QString &title, const QString &rating, const QString &authorId);
+
+    /**
+     * Display form to collect information for book to create
+     */
+    C_ATTR(form_create, :Chained("base") :PathPart("form_create") :Args(0))
+    void form_create(Context *c);
+
+    /**
+     * Take information from form and add to database
+     */
+    C_ATTR(form_create_do, :Chained("base") :PathPart("form_create_do") :Args(0))
+    void form_create_do(Context *c);
 };
 
 #endif //BOOKS_H
